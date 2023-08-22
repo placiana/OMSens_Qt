@@ -74,36 +74,49 @@ QString OMSensDialog::omsensBackendPath()
 
 QString OMSensDialog::pythonExecPath()
 {
-  QString system = osName();
-  QProcess sysProcc;
-
-  // Call command depending on platform
-  if (system == "linux") {
-    sysProcc.start("which", {"python"});
-  } else if (system == "windows") {
-    sysProcc.start("where", {"python"});
-  } else {
-    return "";
-  }
-
-  sysProcc.waitForFinished(); // sets current thread to sleep and waits for pingProcess end
-  // Check that it's was a sucessful call
-  int retCode = sysProcc.exitCode();
-  // Define python path
+  // Get environment var value
+  QString envVarVal = qgetenv("OMSENS_PYTHONBIN");
+  // Check if it's empty
   QString pythonPath;
-  if (retCode == 0)
-  {
-    // Get STDOUT
-    QString sysCallSTDOUT(sysProcc.readAllStandardOutput());
-    // Sanitize output
-    QStringList paths = sysCallSTDOUT.split("\n");
-    QString firstPath = paths.at(0);
-    pythonPath = firstPath;
+  if(envVarVal.size() == 0) {
+    QString system = osName();
+    QProcess sysProcc;
+
+    // Call command depending on platform
+    if (system == "linux") {
+      sysProcc.start("which", {"python3"});
+    } else if (system == "windows") {
+      sysProcc.start("where", {"python"});
+    } else {
+      return "";
+    }
+
+    sysProcc.waitForFinished(); // sets current thread to sleep and waits for pingProcess end
+    // Check that it's was a sucessful call
+    int retCode = sysProcc.exitCode();
+    // Define python path
+    
+    if (retCode == 0)
+    {
+      // Get STDOUT
+      QString sysCallSTDOUT(sysProcc.readAllStandardOutput());
+      // Sanitize output
+      QStringList paths = sysCallSTDOUT.split("\n");
+      QString firstPath = paths.at(0);
+      pythonPath = firstPath;
+    }
+    else
+    {
+      pythonPath = "?";
+    }
+
   }
   else
   {
-    pythonPath = "?";
+    pythonPath=envVarVal;
   }
+
+
   return pythonPath.trimmed();
 }
 
@@ -119,7 +132,8 @@ OMSensDialog::OMSensDialog(Model model, QWidget *parent) : QDialog(parent), mAct
   analysis_results_info_file_name = "result.json";
 
   // OMSens python backend path
-  mOMSensPath    = QDir::cleanPath(OMSensPlugin::OpenModelicaHome + "/share/OMSens")/*omsensBackendPath()*/;
+  //mOMSensPath    = QDir::cleanPath(OMSensPlugin::OpenModelicaHome + "/share/OMSens")/*omsensBackendPath()*/;
+  mOMSensPath    = QDir::cleanPath(omsensBackendPath())/**/;
   // Python executable path
   mPythonBinPath = QDir::cleanPath(pythonExecPath());
   // Initialize dialogs
