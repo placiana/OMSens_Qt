@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDialog>
 #include <QLabel>
+#include <QLineEdit>
 #include "dialogs/BaseRunSpecsDialog.h"
 #include "dialogs/indiv/IndivParamSensAnalysisDialog.h"
 #include "dialogs/sweep/MultiParamSweepDialog.h"
@@ -41,10 +42,10 @@ private:
   IndivParamSensAnalysisDialog *mpIndivSensDialog;
   // GUI
   QLabel      *mpOMSensPathLabel;
-  QLabel      *mpOMSensPathValue;
+  QLineEdit   *mpOMSensPathValue;
   QPushButton *mpOMSensPathBrowseButton;
   QLabel      *mpPythonBinLabel;
-  QLabel      *mpPythonBinValue;
+  QLineEdit   *mpPythonBinValue;
   QPushButton *mpPythonBinBrowseButton;
   QFrame      *mpHorizontalLineOne;
   QPushButton *mpIndivButton;

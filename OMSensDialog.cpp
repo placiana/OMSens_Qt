@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QGuiApplication>
+#include <QLineEdit>
 
 #include "OMSensPlugin.h"
 #include "dialogs/indiv/IndivSensAnalTypeDialog.h"
@@ -142,16 +143,17 @@ OMSensDialog::OMSensDialog(Model model, QWidget *parent) : QDialog(parent), mAct
   mpIndivSensDialog    = new IndivParamSensAnalysisDialog(mActiveModel,this);
   // Initialize paths
   mpOMSensPathLabel = new QLabel("OMSens python backend folder:");
-  mpOMSensPathValue = new QLabel(mOMSensPath);
-  mpOMSensPathValue->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+  mpOMSensPathValue = new QLineEdit(mOMSensPath);
+  mpOMSensPathValue->setEchoMode(QLineEdit::Normal);
+  //mpOMSensPathValue->setFrameStyle(QFrame::Panel | QFrame::Sunken);
   mpOMSensPathBrowseButton = new QPushButton("Browse");
   mpOMSensPathBrowseButton->setAutoDefault(true);
   mpOMSensPathBrowseButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
   connect(mpOMSensPathBrowseButton, SIGNAL(clicked()), this, SLOT(launchOMSensBackendChooseFolderDialog()));
 
   mpPythonBinLabel = new QLabel("Python executable:");
-  mpPythonBinValue = new QLabel(mPythonBinPath);
-  mpPythonBinValue->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+  mpPythonBinValue = new QLineEdit(mPythonBinPath);
+  //mpPythonBinValue->setFrameStyle(QFrame::Panel | QFrame::Sunken);
   mpPythonBinBrowseButton = new QPushButton("Browse");
   mpPythonBinBrowseButton->setAutoDefault(true);
   mpPythonBinBrowseButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
