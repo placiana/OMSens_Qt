@@ -413,9 +413,13 @@ void OMSensDialog::runAnalysisAndShowResult(BaseRunSpecsDialog *runSpecsDialog, 
   {
     // Get script path from OMSens dir and script file name
     QString scriptFileName = runSpecsDialog->pythonScriptName();
-    QString scriptPath = QDir::cleanPath(mOMSensPath + QDir::separator() + scriptFileName);
+    //QString scriptPath = QDir::cleanPath(mOMSensPath + QDir::separator() + scriptFileName);
+    QString scriptPath = QDir::cleanPath(mpOMSensPathValue->text() + QDir::separator() + scriptFileName);
+
+
     // python executable path from class member
-    QString pythonBinPath = mPythonBinPath;
+    //QString pythonBinPath = mPythonBinPath;
+    QString pythonBinPath = mpPythonBinValue->text();
 
     QJsonDocument exp_specs = runSpecsDialog->getRunSpecifications();
     QString destFolderPath = runSpecsDialog->getDestFolderPath();

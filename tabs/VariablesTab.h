@@ -26,6 +26,8 @@ public:
     static const int varColPos  = 0;
     static const int cboxColPos = 1;
 
+    void toggleSelectAll(int);
+
 private:
     QTableWidget *mpVariablesTable;
 

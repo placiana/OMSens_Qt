@@ -4,6 +4,8 @@
 #include <QCheckBox>
 #include <QHeaderView>
 #include <QLabel>
+#include <iostream>
+
 
 // Constructors
 VariablesTab::VariablesTab(QList<VariableInclusion> vars_inclusion, QWidget *parent) : QWidget(parent)
@@ -30,10 +32,18 @@ VariablesTab::VariablesTab(QList<VariableInclusion> vars_inclusion, QWidget *par
         // Wrap the checkbox in a generic QWidget so we can set a layout to center it in the cell
         QCheckBox *includeCheckBox = new QCheckBox;
         includeCheckBox->setChecked(var_include.include);
+
         mpVariablesTable->setCellWidget(rowNum,cboxColPos,includeCheckBox);
     }
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(mpVariablesTable);
+
+    // toggle selection
+    QCheckBox *selectAllCheckBox = new QCheckBox("Select/deselect all");
+    selectAllCheckBox->setChecked(Qt::Checked);
+    connect(selectAllCheckBox    , &QCheckBox::stateChanged, this, &VariablesTab::toggleSelectAll);
+    mainLayout->addWidget(selectAllCheckBox);
+
     setLayout(mainLayout);
 }
 
@@ -42,3 +52,14 @@ QTableWidget *VariablesTab::getVariablesTable() const
 {
     return mpVariablesTable;
 }
+
+void VariablesTab::toggleSelectAll(int checkState)
+{
+    for (int i=0; i< mpVariablesTable->rowCount();++i) {
+        QCheckBox *currentCb = (QCheckBox*) mpVariablesTable->cellWidget(i, cboxColPos);
+        currentCb->setChecked(checkState);
+    }
+
+    return;
+}
+

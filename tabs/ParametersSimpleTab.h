@@ -27,6 +27,7 @@ public:
   //   Columns ordering
   int paramColPos;
   int cboxColPos;
+  void toggleSelectAll(int);
 
 
 private:

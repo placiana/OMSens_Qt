@@ -43,9 +43,16 @@ ParametersSimpleTab::ParametersSimpleTab(QList<ParameterInclusion> params_inclus
   // Resize columns to contents
   mpParametersTable->resizeColumnsToContents();
 
+  // toggle selection
+  QCheckBox *selectAllCheckBox = new QCheckBox("Select/deselect all");
+  selectAllCheckBox->setChecked(Qt::Checked);
+  connect(selectAllCheckBox, &QCheckBox::stateChanged, this, &ParametersSimpleTab::toggleSelectAll);
+
   QVBoxLayout *mainLayout = new QVBoxLayout;
   // Parameters table/list
   mainLayout->addWidget(mpParametersTable);
+
+  mainLayout->addWidget(selectAllCheckBox);
   // Description
   mainLayout->addWidget(mpBriefDescriptionLabel);
   setLayout(mainLayout);
@@ -55,3 +62,14 @@ QTableWidget *ParametersSimpleTab::getParametersTable() const
 {
   return mpParametersTable;
 }
+
+void ParametersSimpleTab::toggleSelectAll(int checkState)
+{
+    for (int i=0; i< mpParametersTable->rowCount();++i) {
+        QCheckBox *currentCb = (QCheckBox*) mpParametersTable->cellWidget(i, cboxColPos);
+        currentCb->setChecked(checkState);
+    }
+
+    return;
+}
+
