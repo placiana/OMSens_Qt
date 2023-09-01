@@ -60,7 +60,9 @@ void SensitivityMethodResultsTab::openMatrix()
 void SensitivityMethodResultsTab::openHeatmap()
 {
     ImageViewerDialog *pImageViewer = new ImageViewerDialog(mHeatmapPath, this);
+    pImageViewer->setWindowFlags(pImageViewer->windowFlags() | Qt::WindowMaximizeButtonHint);
     pImageViewer->show();
+    
 }
 void SensitivityMethodResultsTab::openColumnIDs()
 {

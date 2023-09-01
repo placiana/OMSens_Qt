@@ -8,6 +8,7 @@
 #include <QVBoxLayout>
 #include <QScreen>
 #include <QDir>
+#include <QMargins>
 
 ImageViewerDialog::ImageViewerDialog(QString filePath, QWidget *parent)
    : QDialog(parent),
@@ -22,8 +23,6 @@ ImageViewerDialog::ImageViewerDialog(QString filePath, QWidget *parent)
     scrollArea->setWidget(imageLabel);
     scrollArea->setVisible(false);
 
-    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
-
     loadFile(filePath);
 
     // New layout
@@ -32,6 +31,7 @@ ImageViewerDialog::ImageViewerDialog(QString filePath, QWidget *parent)
     mainLayout->addWidget(scrollArea);
     // Set Dialog layout
     setLayout(mainLayout);
+
 }
 
 
@@ -50,6 +50,8 @@ bool ImageViewerDialog::loadFile(const QString &fileName)
      setImage(newImage);
 
      setWindowFilePath(fileName);
+
+     resize(newImage.size().grownBy(*new QMargins(0,0, 30, 30)));
 
      return true;
 }
